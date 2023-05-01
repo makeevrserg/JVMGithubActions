@@ -28,7 +28,8 @@ tasks.shadowJar {
 }
 
 tasks.create("PublishPrimaryVersion") {
-    val file = File("./.github/version.env")
+    val sep = File.separator
+    val file = File(".${sep}.github${sep}version.env")
     if (!file.exists()) {
         file.parentFile.mkdirs()
         file.createNewFile()
