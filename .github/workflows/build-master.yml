@@ -76,11 +76,29 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew shadowJar --stacktrace
+          mv ./jars/JVMGithubActions-${{ steps.vars.outputs.MAJOR_VERSION }} ./jars/JVMGithubActions-${{ steps.vars.outputs.BUILD_NUMBER }}
 
       - name: Archive plugin jars on GitHub
         uses: actions/upload-artifact@v3
         with:
           name: JVMGithubActions-${{ steps.vars.outputs.BUILD_NUMBER }}
           path: ./jars
+
+      - name: Create internal Release
+        id: create_internal_release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.actions_token}}
+        with:
+          files: |
+            ./jars/JVMGithubActions-${{ steps.vars.outputs.BUILD_NUMBER }}
+          tag_name: ${{ steps.vars.outputs.BUILD_NUMBER }}
+          name: JVMGithubActions-${{ steps.vars.outputs.BUILD_NUMBER }}
+          draft: false
+          prerelease: true
+
+
+
+
 # steps.artifacts_copy.outputs.path
 #
