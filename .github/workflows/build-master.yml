@@ -72,13 +72,13 @@ jobs:
           echo "${MAJOR_VERSION}"
 
 
-#      - name: Build with Gradle
-#        run: |
-#          chmod +x gradlew
-#          ./gradlew shadowJar --stacktrace
-#
-#      - name: Archive plugin jars on GitHub
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: JVMGithubActions-${BUILD_NUMBER}
-#          path: ./jars
+      - name: Build with Gradle
+        run: |
+          chmod +x gradlew
+          ./gradlew shadowJar --stacktrace
+
+      - name: Archive plugin jars on GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          name: JVMGithubActions-${{ BUILD_NUMBER }}
+          path: ./jars
