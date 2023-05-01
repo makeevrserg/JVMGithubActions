@@ -68,7 +68,7 @@ jobs:
           
           echo "MAJOR_VERSION=${MAJOR_VERSION}" >> $GITHUB_OUTPUT
           echo "MINOR_VERSION=${{ needs.version_increase.outputs.build_number }}" >> $GITHUB_OUTPUT
-          echo "BUILD_VERSION=${MAJOR_VERSION}.${{needs.version_increase.outputs.build_number}} " >> $GITHUB_OUTPUT
+          echo "BUILD_VERSION=${MAJOR_VERSION}.${{needs.version_increase.outputs.build_number}}" >> $GITHUB_OUTPUT
           echo "PROJECT_NAME=${PROJECT_NAME}" >> $GITHUB_OUTPUT          
           
           echo ".github/version.env content:"
