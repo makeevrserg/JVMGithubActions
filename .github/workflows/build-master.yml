@@ -67,26 +67,30 @@ jobs:
           echo "major_version=${MAJOR_VERSION}" >> $GITHUB_OUTPUT
           echo "minor_version=${{ needs.version_increase.outputs.build_number }}" >> $GITHUB_OUTPUT
           echo "build_version=${MAJOR_VERSION}.${{needs.version_increase.outputs.build_number}} " >> $GITHUB_OUTPUT
-          echo "project_name=${PROJECT_NAME}" >> $GITHUB_OUTPUT
+          echo "PROJECT_NAME=${PROJECT_NAME}" >> $GITHUB_OUTPUT
+          
+          export BUILD_NUMBER=${MAJOR_VERSION}.${{needs.version_increase.outputs.build_number}}        
+          
           echo ".github/version.env content:"
-          echo "cat: $(cat .github/version.env)"
+          echo "$(cat .github/version.env)"
+          
           echo "saved vars:"
           echo "build_version=${build_version}"
-          echo "major_version=${major_version}"
-          echo "project_name=${project_name}"
+          echo "MAJOR_VERSION=${MAJOR_VERSION}"
+          echo "PROJECT_NAME=${PROJECT_NAME}"
 
       # Build shadowJar and rename .jar
       - name: Build with Gradle
         run: |
           chmod +x gradlew
           ./gradlew shadowJar --stacktrace
-          mv jars/${{ steps.vars.outputs.project_name }}-${{ steps.vars.outputs.major_version }}.jar jars/${{ steps.vars.outputs.project_name }}-${{ steps.vars.outputs.build_version }}.jar
+          mv jars/${{ steps.vars.outputs.PROJECT_NAME }}-${{ steps.vars.outputs.MAJOR_VERSION }}.jar jars/${{ steps.vars.outputs.PROJECT_NAME }}-${{ steps.vars.outputs.build_version }}.jar
 
       # No need to archive
 #      - name: Archive plugin jars on GitHub
 #        uses: actions/upload-artifact@v3
 #        with:
-#          name: ${{ steps.vars.outputs.project_name }}-${{ steps.vars.outputs.build_version }}
+#          name: ${{ steps.vars.outputs.PROJECT_NAME }}-${{ steps.vars.outputs.build_version }}
 #          path: ./jars
 
       - name: Create internal Release
@@ -96,8 +100,8 @@ jobs:
           GITHUB_TOKEN: ${{secrets.actions_token}}
         with:
           files: |
-            ./jars/${{ steps.vars.outputs.project_name }}-${{ steps.vars.outputs.build_version }}.jar
+            ./jars/${{ steps.vars.outputs.PROJECT_NAME }}-${{ steps.vars.outputs.build_version }}.jar
           tag_name: ${{ steps.vars.outputs.build_version }}
-          name: ${{ steps.vars.outputs.project_name }}-${{ steps.vars.outputs.build_version }}
+          name: ${{ steps.vars.outputs.PROJECT_NAME }}-${{ steps.vars.outputs.build_version }}
           draft: false
           prerelease: true
