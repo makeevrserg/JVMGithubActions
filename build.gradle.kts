@@ -38,7 +38,7 @@ tasks.create("PublishPrimaryVersion") {
         "MAJOR_VERSION" to "1.0.0"
     ).forEach {
         file.appendText(
-            "\"${it.key}\"=${it.value}"
+            "${it.key}=${it.value}"
         )
     }
 }
