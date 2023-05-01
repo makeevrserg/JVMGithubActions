@@ -66,8 +66,8 @@ jobs:
           echo "$(cat .github/version.env)" >> $GITHUB_OUTPUT
           echo "major_version=${MAJOR_VERSION}" >> $GITHUB_OUTPUT
           echo "minor_version=${{ needs.version_increase.outputs.build_number }}" >> $GITHUB_OUTPUT
-          export FULL_VERSION=${MAJOR_VERSION}.${{needs.version_increase.outputs.build_number}}        
-          echo "Build number is $FULL_VERSION" >> $GITHUB_OUTPUT
+          export BUILD_NUMBER=${MAJOR_VERSION}.${{needs.version_increase.outputs.build_number}}        
+          echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_OUTPUT
 
 
       - name: Build with Gradle
