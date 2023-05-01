@@ -64,18 +64,18 @@ jobs:
         id: vars
         run: |
           export $(cat .github/version.env | xargs)
+          export "BUILD_VERSION=${MAJOR_VERSION}.${{needs.version_increase.outputs.build_number}} " >> $GITHUB_OUTPUT
+          
           echo "major_version=${MAJOR_VERSION}" >> $GITHUB_OUTPUT
           echo "minor_version=${{ needs.version_increase.outputs.build_number }}" >> $GITHUB_OUTPUT
-          echo "build_version=${MAJOR_VERSION}.${{needs.version_increase.outputs.build_number}} " >> $GITHUB_OUTPUT
-          echo "PROJECT_NAME=${PROJECT_NAME}" >> $GITHUB_OUTPUT
-          
-          export BUILD_NUMBER=${MAJOR_VERSION}.${{needs.version_increase.outputs.build_number}}        
+          echo "BUILD_VERSION=${MAJOR_VERSION}.${{needs.version_increase.outputs.build_number}} " >> $GITHUB_OUTPUT
+          echo "PROJECT_NAME=${PROJECT_NAME}" >> $GITHUB_OUTPUT          
           
           echo ".github/version.env content:"
           echo "$(cat .github/version.env)"
           
           echo "saved vars:"
-          echo "build_version=${build_version}"
+          echo "BUILD_VERSION=${BUILD_VERSION}"
           echo "MAJOR_VERSION=${MAJOR_VERSION}"
           echo "PROJECT_NAME=${PROJECT_NAME}"
 
@@ -100,8 +100,8 @@ jobs:
           GITHUB_TOKEN: ${{secrets.actions_token}}
         with:
           files: |
-            ./jars/${{ steps.vars.outputs.PROJECT_NAME }}-${{ steps.vars.outputs.build_version }}.jar
-          tag_name: ${{ steps.vars.outputs.build_version }}
-          name: ${{ steps.vars.outputs.PROJECT_NAME }}-${{ steps.vars.outputs.build_version }}
+            ./jars/${{ steps.vars.outputs.PROJECT_NAME }}-${{ steps.vars.outputs.BUILD_VERSION }}.jar
+          tag_name: ${{ steps.vars.outputs.BUILD_VERSION }}
+          name: ${{ steps.vars.outputs.PROJECT_NAME }}-${{ steps.vars.outputs.BUILD_VERSION }}
           draft: false
           prerelease: true
