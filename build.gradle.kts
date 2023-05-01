@@ -33,14 +33,12 @@ tasks.create("PublishPrimaryVersion") {
         file.parentFile.mkdirs()
         file.createNewFile()
     }
-    val properties = Properties()
-    properties.load(file.reader())
-    properties.setProperty("MAJOR_VERSION", "1.0.0")
-
-    properties.store(file.writer(), null)
-    // Remove first comment
-    file.readLines().toMutableList().apply {
-        removeFirst()
-        file.writeText(joinToString("\n"))
+    file.writeText("")
+    mapOf(
+        "MAJOR_VERSION" to "1.0.0"
+    ).forEach {
+        file.appendText(
+            "\"${it.key}\"=${it.value}"
+        )
     }
 }
