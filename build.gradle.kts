@@ -36,5 +36,11 @@ tasks.create("PublishPrimaryVersion") {
     val properties = Properties()
     properties.load(file.reader())
     properties.setProperty("MAJOR_VERSION", "1.0.0")
+
     properties.store(file.writer(), null)
+    // Remove first comment
+    file.readLines().toMutableList().apply {
+        removeFirst()
+        file.writeText(joinToString("\n"))
+    }
 }
