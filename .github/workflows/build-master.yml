@@ -54,6 +54,11 @@ jobs:
           distribution: 'adopt'
           java-version: 17
 
+      - name: Write version to .env
+        run: |
+          chmod +x gradlew
+          ./gradlew PublishPrimaryVersion --stacktrace
+
       - name: 'Set variables'
         id: vars
         run: |
@@ -62,10 +67,6 @@ jobs:
           echo "minor_version=${{ needs.version_increase.outputs.build_number }}" >> $GITHUB_OUTPUT"
           echo "Build number is $BUILD_NUMBER"  
 
-      - name: Write version to .env
-        run: |
-          chmod +x gradlew
-          ./gradlew PublishPrimaryVersion --stacktrace
 
       - name: Build with Gradle
         run: |
