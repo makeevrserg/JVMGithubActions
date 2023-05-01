@@ -76,7 +76,7 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew shadowJar --stacktrace
-          mv ./jars/JVMGithubActions-${{ steps.vars.outputs.MAJOR_VERSION }} ./jars/JVMGithubActions-${{ steps.vars.outputs.BUILD_NUMBER }}
+          mv jars/JVMGithubActions-${{ steps.vars.outputs.MAJOR_VERSION }} jars/JVMGithubActions-${{ steps.vars.outputs.BUILD_NUMBER }}
 
       - name: Archive plugin jars on GitHub
         uses: actions/upload-artifact@v3
