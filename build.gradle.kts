@@ -35,10 +35,11 @@ tasks.create("PublishPrimaryVersion") {
     }
     file.writeText("")
     mapOf(
-        "MAJOR_VERSION" to "1.0.0"
+        "MAJOR_VERSION" to "1.0.0",
+        "PROJECT_NAME" to "JVMGithubActions"
     ).forEach {
         file.appendText(
-            "${it.key}=${it.value}"
+            "${it.key}=${it.value}\n"
         )
     }
 }
