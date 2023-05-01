@@ -22,10 +22,20 @@ jobs:
       - name: Print new build number
         run: echo "Build number is $BUILD_NUMBER"
 
-
-  setup_history:
-    name: Checkout, Gradle caches and JDK
+  validate_gradle:
+    name: Validate gradle
     runs-on: ubuntu-latest
+    needs: setup_history
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+  build:
+    name: Build and upload
+    runs-on: ubuntu-latest
+    # ${{needs.version_increase.outputs.build_number}}
+    needs: [ version_increase, validate_gradle, setup_history ]
     steps:
       - name: Checkout Git repo
         uses: actions/checkout@v2
@@ -41,21 +51,6 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
-
-  validate_gradle:
-    name: Validate gradle
-    runs-on: ubuntu-latest
-    needs: setup_history
-    steps:
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
-
-  build:
-    name: Build and upload
-    runs-on: ubuntu-latest
-    # ${{needs.version_increase.outputs.build_number}}
-    needs: [ version_increase, validate_gradle, setup_history ]
-    steps:
       - name: Build with Gradle
         run: |
           chmod +x gradlew
