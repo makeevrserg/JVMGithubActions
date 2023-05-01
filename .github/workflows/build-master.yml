@@ -76,9 +76,6 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew shadowJar --stacktrace
-          ls
-          cd jars
-          ls
           mv jars/JVMGithubActions-${{ steps.vars.outputs.MAJOR_VERSION }}.jar jars/JVMGithubActions-${{ steps.vars.outputs.BUILD_NUMBER }}.jar
 
       - name: Archive plugin jars on GitHub
@@ -100,7 +97,8 @@ jobs:
           draft: false
           prerelease: true
 
-
+# JVMGithubActions-1.0.0.jar
+# JVMGithubActions-1.0.0.jar
 
 
 # steps.artifacts_copy.outputs.path
