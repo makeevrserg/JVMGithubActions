@@ -80,5 +80,7 @@ jobs:
       - name: Archive plugin jars on GitHub
         uses: actions/upload-artifact@v3
         with:
-          name: JVMGithubActions-${{ BUILD_NUMBER }}
+          name: JVMGithubActions-${{ steps.vars.outputs.BUILD_NUMBER }}
           path: ./jars
+# steps.artifacts_copy.outputs.path
+#
