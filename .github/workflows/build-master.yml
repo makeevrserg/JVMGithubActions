@@ -18,7 +18,7 @@ jobs:
         id: buildnumber
         uses: onyxmueller/build-tag-number@v1
         with:
-          token: ${{secrets.github_token}}
+          token: ${{secrets.actions_token}}
   build:
     name: Build and upload
     runs-on: ubuntu-latest
