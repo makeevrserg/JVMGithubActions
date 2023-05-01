@@ -25,7 +25,6 @@ jobs:
   validate_gradle:
     name: Validate gradle
     runs-on: ubuntu-latest
-    needs: setup_history
     steps:
       - uses: actions/checkout@v3
       - name: Validate Gradle Wrapper
