@@ -34,7 +34,7 @@ jobs:
     name: Build and upload
     runs-on: ubuntu-latest
     # ${{needs.version_increase.outputs.build_number}}
-    needs: [ version_increase, validate_gradle, setup_history ]
+    needs: [ version_increase, validate_gradle ]
     steps:
       - name: Checkout Git repo
         uses: actions/checkout@v2
